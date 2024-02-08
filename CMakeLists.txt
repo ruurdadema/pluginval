@@ -11,6 +11,20 @@ if (APPLE)
     # set(CMAKE_OSX_ARCHITECTURES arm64 x86_64)
 endif()
 
+option(WITH_ADDRESS_SANITIZER "Enable Address Sanitizer" OFF)
+if (WITH_ADDRESS_SANITIZER)
+    message("-- Pluginval: -DWITH_ADDRESS_SANITIZER=ON argument was specified: Enabling Clang's Address Sanitizer")
+    add_compile_options(-fsanitize=address,undefined -g)
+    link_libraries(-fsanitize=address,undefined)
+endif ()
+
+option(WITH_THREAD_SANITIZER "Enable Thread Sanitizer" OFF)
+if (WITH_THREAD_SANITIZER)
+    message("-- Pluginval: -DWITH_THREAD_SANITIZER=ON argument was specified: Enabling Clang's Thread Sanitizer")
+    add_compile_options(-fsanitize=thread -g)
+    link_libraries(-fsanitize=thread)
+endif ()
+
 # Adds all the module sources so they appear correctly in the IDE
 set_property(GLOBAL PROPERTY USE_FOLDERS YES)
 option(JUCE_ENABLE_MODULE_SOURCE_GROUPS "Enable Module Source Groups" ON)
